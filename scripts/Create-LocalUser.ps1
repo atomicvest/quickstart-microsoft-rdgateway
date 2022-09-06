@@ -49,3 +49,19 @@ Try {
     Write-Output "Failed to add local user to group $_"
     Exit 1
 }
+
+Write-Output 'Create local user to group'
+Try {
+    New-LocalGroup rdpgateway
+} Catch [System.Exception]{
+    Write-Output "Failed to crate user to group $_"
+    Exit 1
+}
+
+Write-Output 'Adding local user to group'
+Try {
+    Add-LocalGroupMember -Group 'rdpgateway' -Member $AdminUserName -ErrorAction Stop
+} Catch [System.Exception]{
+    Write-Output "Failed to add local user to group $_"
+    Exit 1
+}
